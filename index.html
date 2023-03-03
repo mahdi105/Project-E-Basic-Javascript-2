@@ -24,7 +24,7 @@
     </header>
     <main class="container">
         <section class="pt-5 pb-2 mb-4">
-            <div class="row row-cols-1 row-cols-md-3 g-3">
+            <div class="row row-cols-1 row-cols-md-3 g-3" id="card-container">
                 <div class="col">
                     <div class="card p-3">
                         <div class="mb-3">
@@ -190,63 +190,78 @@
             </div>
         </section>
         <section class="mb-4">
-            <button class="btn btn-danger d-block mx-auto">See More</button>
+            <button class="btn btn-danger d-block mx-auto d-none" id="showall">See More</button>
         </section>
     </main>
     <footer>
     </footer>
     <!-- Modal -->
-  <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-xl">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">App Details</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-            <div class="row row-cols-1 row-cols-md-2 g-5 px-4">
-                <div class="col p-3 border border-2 rounded-2 bg-danger border-danger-subtle bg-opacity-10">
-                    <h1 class="fs-4 fw-semibold mb-2">ChatGPT is an AI-Powered chatbot platfrom that uses OpenAI's GPT technology to simulate human conversation.</h1>
-                    <div class="row row-cols-1 row-cols-md-3 g-2" id="pricingPlan">
-                        <div class="col"><p class="p-4 bg-white rounded-2 text-success">$10/Month Basic</p></div>
-                        <div class="col"><p class="p-4 bg-white rounded-2 text-warning">$50/Month Pro</p></div>
-                        <div class="col"><p class="p-4 bg-white rounded-2 text-danger">Contact us Enterprise</p></div>
-                    </div>
-                    <div class="d-flex justify-content-md-between flex-wrap flex-lg-nowrap">
-                        <div>
-                            <h3 class="fs-4">Features</h3>
-                            <ul class="text-light-emphasis">
-                                <li>Customizable Responses</li>
-                                <li>Multilingual Support</li>
-                                <li>Seamless Integration</li>
-                            </ul>
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">App Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row row-cols-1 row-cols-md-2 g-5 px-4">
+                        <div class="col p-3 border border-2 rounded-2 bg-danger border-danger-subtle bg-opacity-10">
+                            <h1 class="fs-4 fw-semibold mb-2" id="modal-desc">ChatGPT is an AI-Powered chatbot platfrom that uses
+                                OpenAI's GPT technology to simulate human conversation.</h1>
+                            <div class="row row-cols-1 row-cols-md-3 g-2" id="pricingPlan">
+                                <div class="col">
+                                    <p class="p-4 bg-white rounded-2 text-success">$10/Month Basic</p>
+                                </div>
+                                <div class="col">
+                                    <p class="p-4 bg-white rounded-2 text-warning">$50/Month Pro</p>
+                                </div>
+                                <div class="col">
+                                    <p class="p-4 bg-white rounded-2 text-danger">Contact us Enterprise</p>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-md-between flex-wrap flex-lg-nowrap">
+                                <div>
+                                    <h3 class="fs-4">Features</h3>
+                                    <ul class="text-light-emphasis">
+                                        <li>Customizable Responses</li>
+                                        <li>Multilingual Support</li>
+                                        <li>Seamless Integration</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <h3 class="fs-4">Integrations</h3>
+                                    <ul class="text-light-emphasis">
+                                        <li>FB Messenger</li>
+                                        <li>Slack</li>
+                                        <li>Telegram</li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <h3 class="fs-4">Integrations</h3>
-                            <ul class="text-light-emphasis">
-                                <li>FB Messenger</li>
-                                <li>Slack</li>
-                                <li>Telegram</li>
-                            </ul>
+                        <div class="col position-relative">
+                            <div class="mb-3 position-relative">
+                                <img src="ai.png" alt="" srcset="" class="w-100 rounded-2 d-block">
+                                <button
+                                    class="btn btn-danger d-block m-2 position-absolute top-0 end-0 "><span>94</span>%
+                                    Accuracy</button>
+                            </div>
+                            <h3 class="text-center mb-3 fw-semibold">Hi, How are ou doing today?</h3>
+                            <p class="text-center text-secondary-emphasis">I'm doing well, thank you for asking. How can
+                                i assist you today?</p>
                         </div>
                     </div>
                 </div>
-                <div class="col position-relative">
-                    <div class="mb-3 position-relative">
-                        <img src="ai.png" alt="" srcset="" class="w-100 rounded-2 d-block">
-                        <button class="btn btn-danger d-block m-2 position-absolute top-0 end-0 "><span>94</span>% Accuracy</button>
-                    </div>
-                    <h3 class="text-center mb-3 fw-semibold">Hi, How are ou doing today?</h3>
-                    <p class="text-center text-secondary-emphasis">I'm doing well, thank you for asking. How can i assist you today?</p>
-                </div> 
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
+    <!-- PreLoader -->
+    <div class="spinner-border text-primary position-absolute top-50 start-50 d-none" role="status" id="preloader">
+        <span class="visually-hidden">Loading...</span>
+    </div>   
 
     <!--==============BOOTSTRAP SCRIPT =================-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
