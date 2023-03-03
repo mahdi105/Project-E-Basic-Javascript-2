@@ -19,6 +19,15 @@ const aiDataDisplay = (tools,limit) => {
         showAll.classList.add('d-none');
     }
     tools.forEach(tool => {
+        //================= Card Features List Display============
+        const featureOl = document.createElement('ol');
+        tool.features.forEach(feature =>{
+            const featureLi = document.createElement('li');
+            featureLi.innerText = `${feature}`;
+            featureOl.appendChild(featureLi);
+        })
+        const featuresList = featureOl.innerHTML;
+        // ==================Display Cards=========================
         const createElement = document.createElement('div');
         createElement.classList.add('col');
         createElement.innerHTML = `
@@ -29,13 +38,7 @@ const aiDataDisplay = (tools,limit) => {
                 <div>
                     <h3 class="mb-1 fw-semibold">Features</h3>
                     <ol>
-                        <li class="${tool.features[0] === undefined?'d-none':'d-block' }">1. ${tool.features[0]}</li>
-                        <li class="${tool.features[1] === undefined?'d-none':'d-block' }">2. ${tool.features[1]}</li>
-                        <li class="${tool.features[2] === undefined?'d-none':'d-block' }">3. ${tool.features[2]}</li>
-                        <li class="${tool.features[3] === undefined?'d-none':'d-block' }">4. ${tool.features[3]}</li>
-                        <li class="${tool.features[4] === undefined?'d-none':'d-block' }">5. ${tool.features[4]}</li>
-                        <li class="${tool.features[5] === undefined?'d-none':'d-block' }">5. ${tool.features[4]}</li>
-                        <li class="${tool.features[6] === undefined?'d-none':'d-block' }">5. ${tool.features[4]}</li>
+                        ${featuresList}
                     </ol>
                 </div>
                 <hr>
@@ -128,11 +131,15 @@ const displayModal = (detail) => {
     // =========================================
     const modalIntegrations = document.getElementById('modal-integrations');
     modalIntegrations.innerHTML = '';
-    detail.integrations?.forEach(item => {
+    if(detail.integrations.length > 0){
+        detail.integrations.forEach(item => {
         const itemLi = document.createElement('li');
         itemLi.innerText = `${item}`;
         modalIntegrations.appendChild(itemLi);
-    });
+        });
+    }else{
+        modalIntegrations.innerHTML = `<li>No Integration available</li>`;
+    }
 
     // =================================================
     // Modal =========== Accuracy Tag ==================
