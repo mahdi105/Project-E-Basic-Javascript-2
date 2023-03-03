@@ -1,9 +1,6 @@
 #pricingPlan > div p{
-    height: 100px !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-size: 16px;
     font-weight: bold;
     text-align: center;
+    min-height: 120px;
 }

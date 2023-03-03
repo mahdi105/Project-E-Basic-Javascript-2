@@ -65,25 +65,47 @@ const preloaderToggleFunction = (isLoading) => {
         preloader.classList.add('d-none');
     }
 }
-
+// Preloader End
 preloaderToggleFunction(true);
 aiDataLoad();
 
-// ModaL 
+// ModaL Loader
 const loadDetails = async(id) => {
     try{
         const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
         const res = await fetch(url);
         const data = await res.json();
-       
         displayModal(data.data);
     }catch(error){
         console.log(error);
     }
 }
 const displayModal = (detail) => {
-    console.log(detail);
-    const description = document.getElementById('')
+    console.log(detail.pricing);
+    // Modal Description
+    const description = document.getElementById('modal-desc');
+    description.innerText = `${detail.description}`;
+    // Modal Image
+    const toolImage = document.getElementById('modal-img');
+    toolImage.setAttribute('src',`${detail.image_link[0]}`);
+    // Modal Features
+    const modalFeatures = document.getElementById('modal-features');
+    // Pricing Plans
+    const pricingPlanarea = document.getElementById('pricingPlan');
+    pricingPlanarea.innerHTML = '';
+    pricingPlanarea.innerHTML = `
+        <div class="col">
+            <p class="p-4 bg-white rounded-2 text-success">$<span id="price1">${detail.pricing[0]?detail.pricing[0].price:'No Cost'}</span>/Month <span id="plan1">${detail.pricing[0]?detail.pricing[0].plan:'Free'}</span></p>
+        </div>
+        <div class="col">
+            <p class="p-4 bg-white rounded-2 text-warning">$<span id="price2">${detail.pricing[1]?detail.pricing[1].price:'No Cost'}</span>/Month <span id="plan2">${detail.pricing[1]?detail.pricing[1].plan:'Free'}</span></p>
+        </div>
+        <div class="col">
+            <p class="p-4 bg-white rounded-2 text-danger"><span id="price3">${detail.pricing[2]?detail.pricing[2].price:'Free'}</span><span id="plan3">${detail.pricing[2]?detail.pricing[2].plan:'Free'}</span></p>
+        </div>
+    `;
+
+
 }
 
 
