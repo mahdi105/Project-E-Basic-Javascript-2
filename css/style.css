@@ -1,4 +1,4 @@
-#pricingPlan p{
+#pricingPlan > div p{
     height: 100px !important;
     display: flex;
     justify-content: center;
