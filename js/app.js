@@ -113,8 +113,9 @@ const displayModal = (detail) => {
         modalFeatureLi.innerText = `${detail.features[feature].feature_name}`;
         modalFeatures.appendChild(modalFeatureLi);
     }
-
-    // Modal ===========Integrations============
+    // =========================================
+    // Modal  ======     Integrations    =======
+    // =========================================
     const modalIntegrations = document.getElementById('modal-integrations');
     modalIntegrations.innerHTML = '';
     detail.integrations?.forEach(item => {
@@ -122,6 +123,19 @@ const displayModal = (detail) => {
         itemLi.innerText = `${item}`;
         modalIntegrations.appendChild(itemLi);
     })
+
+    // Modal ================ Input Output Example ================
+    const inputText = document.getElementById('input-text');
+    const outputText = document.getElementById('output-text');
+    inputText.innerText = '';
+    outputText.innerText = '';
+    if (detail.input_output_examples.length > 0) {
+        inputText.innerText = `${detail.input_output_examples[0].input}`;
+        outputText.innerText = `${detail.input_output_examples[0].output}`;
+    } else {
+        inputText.innerText = `No input text found`;
+        outputText.innerText = `No output text found`;
+    }
    
 
     
