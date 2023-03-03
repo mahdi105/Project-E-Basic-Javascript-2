@@ -82,7 +82,6 @@ showAllBtn.addEventListener('click',() => {
 })
 
 // ModaL Loader
-preloaderToggleFunction(true);
 const loadDetails = async(id) => {
     try{
         const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
@@ -106,13 +105,13 @@ const displayModal = (detail) => {
     pricingPlanarea.innerHTML = '';
     pricingPlanarea.innerHTML = `
         <div class="col">
-            <p class="p-4 bg-white rounded-2 text-success">$<span id="price1">${detail.pricing[0] ? detail.pricing[0].price : 'No Cost'}</span>/Month <span id="plan1">${detail.pricing[0] ? detail.pricing[0].plan : 'Free'}</span></p>
+            <p class="p-4 bg-white rounded-2 text-success"><span id="price1">${detail.pricing?detail.pricing[0].price : 'No Cost'}</span>/Month <span id="plan1">${detail.pricing?detail.pricing[0].plan : 'Free'}</span></p>
         </div>
         <div class="col">
-            <p class="p-4 bg-white rounded-2 text-warning">$<span id="price2">${detail.pricing[1] ? detail.pricing[1].price : 'No Cost'}</span>/Month <span id="plan2">${detail.pricing[1] ? detail.pricing[1].plan : 'Free'}</span></p>
+            <p class="p-4 bg-white rounded-2 text-warning"><span id="price2">${detail.pricing?detail.pricing[1].price : 'No Cost'}</span>/Month <span id="plan2">${detail.pricing?detail.pricing[1].plan : 'Free'}</span></p>
         </div>
         <div class="col">
-            <p class="p-4 bg-white rounded-2 text-danger"><span id="price3">${detail.pricing[2] ? detail.pricing[2].price : 'Free'}</span><span id="plan3">${detail.pricing[2] ? detail.pricing[2].plan : 'Free'}</span></p>
+            <p class="p-4 bg-white rounded-2 text-danger"><span id="price3">${detail.pricing? detail.pricing[2].price : 'Free Of Cost/'}</span><span id="plan3">${detail.pricing?detail.pricing[2].plan : 'Enterprise'}</span></p>
         </div>
     `;
 
@@ -140,14 +139,14 @@ const displayModal = (detail) => {
     // =================================================
     const accuracyTag = document.getElementById('accuracy')
     const accuracyPercentage = (detail.accuracy.score) * 100;
+    console.log(accuracyPercentage);
     const accuracyBtn = document.getElementById('accuracy-btn');
     if(accuracyPercentage > 0){
-        accuracyBtn.classList.add('d-block')
+        accuracyBtn.classList.remove('d-none');
         accuracyTag.innerText = `${accuracyPercentage}`;
     }else{
         accuracyBtn.classList.add('d-none');
     }
-    preloaderToggleFunction(false);
 
     // Modal ================ Input Output Example ================
     const inputText = document.getElementById('input-text');
