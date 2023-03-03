@@ -1,18 +1,18 @@
-const aiDataLoad = async () => {
+const aiDataLoad = async (dLimit) => {
     try {
         const url = `https://openapi.programming-hero.com/api/ai/tools`;
         const res = await fetch(url);
         const data = await res.json();
-        aiDataDisplay(data.data.tools);
+        aiDataDisplay(data.data.tools,dLimit);
     } catch (error) {
         console.log(error);
     }
 }
-const aiDataDisplay = (tools) => {
+const aiDataDisplay = (tools,limit) => {
     const cardContainer = document.getElementById('card-container');
     cardContainer.innerHTML = '';
     const showAll = document.getElementById('showall');
-    if (tools.length > 6) {
+    if (tools.length > 6 && limit) {
         showAll.classList.remove('d-none');
         tools = tools.slice(0, 6);
     } else {
@@ -22,7 +22,7 @@ const aiDataDisplay = (tools) => {
         const createElement = document.createElement('div');
         createElement.classList.add('col');
         createElement.innerHTML = `
-            <div class="card p-3">
+            <div class="card p-3" style="min-height:490px;">
                 <div class="mb-3">
                     <img src="${tool.image}" class="card-img-top rounded-2" alt="...">
                 </div>
@@ -34,6 +34,8 @@ const aiDataDisplay = (tools) => {
                         <li class="${tool.features[2] === undefined?'d-none':'d-block' }">3. ${tool.features[2]}</li>
                         <li class="${tool.features[3] === undefined?'d-none':'d-block' }">4. ${tool.features[3]}</li>
                         <li class="${tool.features[4] === undefined?'d-none':'d-block' }">5. ${tool.features[4]}</li>
+                        <li class="${tool.features[5] === undefined?'d-none':'d-block' }">5. ${tool.features[4]}</li>
+                        <li class="${tool.features[6] === undefined?'d-none':'d-block' }">5. ${tool.features[4]}</li>
                     </ol>
                 </div>
                 <hr>
@@ -65,12 +67,22 @@ const preloaderToggleFunction = (isLoading) => {
         preloader.classList.add('d-none');
     }
 }
-// Preloader End
-preloaderToggleFunction(true);
-// Main Content Load
-aiDataLoad();
+
+// Display Limited Data
+const showLimitedData = (dataLimit) => {
+    preloaderToggleFunction(true);
+    aiDataLoad(dataLimit);
+}
+showLimitedData(6);
+
+// Display All Data 
+const showAllBtn = document.getElementById('showall');
+showAllBtn.addEventListener('click',() => {
+    showLimitedData();
+})
 
 // ModaL Loader
+preloaderToggleFunction(true);
 const loadDetails = async(id) => {
     try{
         const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
@@ -82,7 +94,6 @@ const loadDetails = async(id) => {
     }
 }
 const displayModal = (detail) => {
-    console.log(detail.accuracy);
     // Modal ===============Description=========
     const description = document.getElementById('modal-desc');
     description.innerText = `${detail.description}`;
@@ -122,7 +133,21 @@ const displayModal = (detail) => {
         const itemLi = document.createElement('li');
         itemLi.innerText = `${item}`;
         modalIntegrations.appendChild(itemLi);
-    })
+    });
+
+    // =================================================
+    // Modal =========== Accuracy Tag ==================
+    // =================================================
+    const accuracyTag = document.getElementById('accuracy')
+    const accuracyPercentage = (detail.accuracy.score) * 100;
+    const accuracyBtn = document.getElementById('accuracy-btn');
+    if(accuracyPercentage > 0){
+        accuracyBtn.classList.add('d-block')
+        accuracyTag.innerText = `${accuracyPercentage}`;
+    }else{
+        accuracyBtn.classList.add('d-none');
+    }
+    preloaderToggleFunction(false);
 
     // Modal ================ Input Output Example ================
     const inputText = document.getElementById('input-text');
@@ -133,25 +158,11 @@ const displayModal = (detail) => {
         inputText.innerText = `${detail.input_output_examples[0].input}`;
         outputText.innerText = `${detail.input_output_examples[0].output}`;
     } else {
-        inputText.innerText = `No input text found`;
-        outputText.innerText = `No output text found`;
+        inputText.innerText = `Can you give any example?`;
+        outputText.innerText = `No! Not Yet! Take a break!!!`;
     }
-    // =================================================
-    // Modal =========== Accuracy Tag ==================
-    // =================================================
-    const accuracyTag = document.getElementById('accuracy')
-    const accuracyPercentage = (detail.accuracy.score) * 100;
-    accuracyTag.innerText = '';
-    const accuracyBtn = document.getElementById('accuracy-btn')
-
-    if(detail.accuracy.score){
-        accuracyTag.innerText = `${accuracyPercentage}`;
-    }else{
-        accuracyBtn.classList.add('d-none');
-    }
-
-
 }
+
 
 
 
