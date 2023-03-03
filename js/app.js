@@ -114,6 +114,14 @@ const displayModal = (detail) => {
         modalFeatures.appendChild(modalFeatureLi);
     }
 
+    // Modal ===========Integrations============
+    const modalIntegrations = document.getElementById('modal-integrations');
+    modalIntegrations.innerHTML = '';
+    detail.integrations?.forEach(item => {
+        const itemLi = document.createElement('li');
+        itemLi.innerText = `${item}`;
+        modalIntegrations.appendChild(itemLi);
+    })
    
 
     
