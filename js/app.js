@@ -82,7 +82,7 @@ const loadDetails = async(id) => {
     }
 }
 const displayModal = (detail) => {
-    console.log(detail);
+    console.log(detail.accuracy);
     // Modal ===============Description=========
     const description = document.getElementById('modal-desc');
     description.innerText = `${detail.description}`;
@@ -136,10 +136,21 @@ const displayModal = (detail) => {
         inputText.innerText = `No input text found`;
         outputText.innerText = `No output text found`;
     }
-   
+    // =================================================
+    // Modal =========== Accuracy Tag ==================
+    // =================================================
+    const accuracyTag = document.getElementById('accuracy')
+    const accuracyPercentage = (detail.accuracy.score) * 100;
+    accuracyTag.innerText = '';
+    const accuracyBtn = document.getElementById('accuracy-btn')
 
-    
-    
+    if(detail.accuracy.score){
+        accuracyTag.innerText = `${accuracyPercentage}`;
+    }else{
+        accuracyBtn.classList.add('d-none');
+    }
+
+
 }
 
 
