@@ -1,3 +1,5 @@
+
+// Load data of tools from database
 const aiDataLoad = async (dLimit) => {
     try {
         const url = `https://openapi.programming-hero.com/api/ai/tools`;
@@ -191,38 +193,3 @@ const displayModal = (detail) => {
 document.getElementById('sortby-btn').addEventListener('click',()=>{
     showLimitedData(true);
 })
-
-
-
-
-
-
-
-
-
-
-
-// Testing
-const dataLoad = async (dLimit) => {
-    try {
-        const url = `https://openapi.programming-hero.com/api/ai/tools`;
-        const res = await fetch(url);
-        const data = await res.json();
-        const activities = data.data.tools;
-        activities.map(obj => {
-            var dateString = obj.published_in;
-            var dateParts = dateString.split("/");
-            // month is 0-based, that's why we need dataParts[1] - 1
-            var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
-            obj.published_in = dateObject;
-        });
-    } catch (error) {
-        console.log(error);
-    }
-}
-dataLoad();
-
-
-
-
-
