@@ -3,7 +3,21 @@ const aiDataLoad = async (dLimit) => {
         const url = `https://openapi.programming-hero.com/api/ai/tools`;
         const res = await fetch(url);
         const data = await res.json();
-        aiDataDisplay(data.data.tools,dLimit);
+        if(dLimit === true){
+            const activities = data.data.tools;
+            activities.map(obj => {
+                var dateString = obj.published_in;
+                var dateParts = dateString.split("/");
+                // month is 0-based, that's why we need dataParts[1] - 1
+                var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
+                obj.published_in = dateObject;
+            });
+            activities.sort((a, b) => b.published_in - a.published_in);
+            aiDataDisplay(activities,dLimit);
+        }else{
+            aiDataDisplay(data.data.tools,dLimit);
+        }
+       
     } catch (error) {
         console.log(error);
     }
@@ -12,13 +26,16 @@ const aiDataDisplay = (tools,limit) => {
     const cardContainer = document.getElementById('card-container');
     cardContainer.innerHTML = '';
     const showAll = document.getElementById('showall');
-    if (tools.length > 6 && limit) {
+    if (tools.length > limit && limit && typeof limit === 'number') {
         showAll.classList.remove('d-none');
         tools = tools.slice(0, 6);
     } else {
         showAll.classList.add('d-none');
     }
     tools.forEach(tool => {
+        if(limit === true){
+            tool.published_in = tool.published_in.toLocaleDateString();
+        }
         //================= Card Features List Display============
         const featureOl = document.createElement('ol');
         tool.features.forEach(feature =>{
@@ -146,7 +163,6 @@ const displayModal = (detail) => {
     // =================================================
     const accuracyTag = document.getElementById('accuracy')
     const accuracyPercentage = (detail.accuracy.score) * 100;
-    console.log(accuracyPercentage);
     const accuracyBtn = document.getElementById('accuracy-btn');
     if(accuracyPercentage > 0){
         accuracyBtn.classList.remove('d-none');
@@ -168,6 +184,43 @@ const displayModal = (detail) => {
         outputText.innerText = `No! Not Yet! Take a break!!!`;
     }
 }
+
+// ===============================================
+// ============  SORT BY DATE Filter  ============
+// ===============================================
+document.getElementById('sortby-btn').addEventListener('click',()=>{
+    showLimitedData(true);
+})
+
+
+
+
+
+
+
+
+
+
+
+// Testing
+const dataLoad = async (dLimit) => {
+    try {
+        const url = `https://openapi.programming-hero.com/api/ai/tools`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const activities = data.data.tools;
+        activities.map(obj => {
+            var dateString = obj.published_in;
+            var dateParts = dateString.split("/");
+            // month is 0-based, that's why we need dataParts[1] - 1
+            var dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]); 
+            obj.published_in = dateObject;
+        });
+    } catch (error) {
+        console.log(error);
+    }
+}
+dataLoad();
 
 
 
