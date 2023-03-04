@@ -150,14 +150,19 @@ const displayModal = (detail) => {
     // =========================================
     const modalIntegrations = document.getElementById('modal-integrations');
     modalIntegrations.innerHTML = '';
-    if(detail.integrations.length > 0){
-        detail.integrations.forEach(item => {
-        const itemLi = document.createElement('li');
-        itemLi.innerText = `${item}`;
-        modalIntegrations.appendChild(itemLi);
-        });
-    }else{
-        modalIntegrations.innerHTML = `<li>No Integration available</li>`;
+    if(detail.integrations !== null){
+        if(detail.integrations.length > 0 ){
+            detail.integrations.forEach(item => {
+            const itemLi = document.createElement('li');
+            itemLi.innerText = `${item}`;
+            modalIntegrations.appendChild(itemLi);
+            });
+        } 
+    }
+    else{
+        const li = document.createElement('li');
+        li.innerText = 'No Integration available';
+        modalIntegrations.appendChild(li);
     }
 
     // =================================================
@@ -178,10 +183,13 @@ const displayModal = (detail) => {
     const outputText = document.getElementById('output-text');
     inputText.innerText = '';
     outputText.innerText = '';
-    if (detail.input_output_examples.length > 0) {
-        inputText.innerText = `${detail.input_output_examples[0].input}`;
-        outputText.innerText = `${detail.input_output_examples[0].output}`;
-    } else {
+    if(detail.input_output_examples !== null){
+        if (detail.input_output_examples.length > 0) {
+            inputText.innerText = `${detail.input_output_examples[0].input}`;
+            outputText.innerText = `${detail.input_output_examples[0].output}`;
+        }
+    }
+     else {
         inputText.innerText = `Can you give any example?`;
         outputText.innerText = `No! Not Yet! Take a break!!!`;
     }
